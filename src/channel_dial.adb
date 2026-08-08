@@ -44,23 +44,35 @@ procedure Channel_Dial is
 
       Date_Last_Verified => To_Unbounded_String ("2026-08-08"));
 
+   type Channel_Array is array (Positive range <>) of Channel_Record;
+
+   Channels : constant Channel_Array :=
+
+     (1 => GMRC);
+
 begin
 
    Put_Line ("ChannelDial");
 
-   Put_Line ("Channel: " & To_String (GMRC.Channel_Name));
+   for Channel of Channels loop
 
-   Put_Line ("Platform: " & To_String (GMRC.Platform));
+      Put_Line ("Channel: " & To_String (Channel.Channel_Name));
 
-   Put_Line ("Topic: " & To_String (GMRC.Topic));
+      Put_Line ("Platform: " & To_String (Channel.Platform));
 
-   Put_Line ("Language: " & To_String (GMRC.Language));
+      Put_Line ("Topic: " & To_String (Channel.Topic));
 
-   Put_Line ("Region: " & To_String (GMRC.Region));
+      Put_Line ("Language: " & To_String (Channel.Language));
 
-   Put_Line ("Description: " & To_String (GMRC.Description));
+      Put_Line ("Region: " & To_String (Channel.Region));
 
-   Put_Line ("Last verified: " & To_String (GMRC.Date_Last_Verified));
+      Put_Line ("Description: " & To_String (Channel.Description));
+
+      Put_Line
+
+        ("Last verified: " & To_String (Channel.Date_Last_Verified));
+
+   end loop;
 
 end Channel_Dial;
 
