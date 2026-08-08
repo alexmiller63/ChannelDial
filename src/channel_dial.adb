@@ -60,9 +60,17 @@ begin
 
    --  Lesson 4: Read a Unix-style subcommand from the command line.
 
+   --  Lesson 5: Read multiple arguments and build a Channel_Record.
+
    if Argument_Count = 0 then
 
-      Put_Line ("Usage: channel_dial list");
+      Put_Line ("Usage:");
+
+      Put_Line ("  channel_dial list");
+
+      Put_Line
+
+        ("  channel_dial add NAME PLATFORM TOPIC LANGUAGE REGION DESCRIPTION DATE");
 
    elsif Argument (1) = "list" then
 
@@ -87,6 +95,72 @@ begin
            ("Last verified: " & To_String (Channel.Date_Last_Verified));
 
       end loop;
+
+   elsif Argument (1) = "add" then
+
+      if Argument_Count /= 8 then
+
+         Put_Line
+
+           ("Usage: channel_dial add NAME PLATFORM TOPIC LANGUAGE REGION DESCRIPTION DATE");
+
+      else
+
+         declare
+
+            New_Channel : constant Channel_Record :=
+
+              (Channel_Name       => To_Unbounded_String (Argument (2)),
+
+               Platform           => To_Unbounded_String (Argument (3)),
+
+               Topic              => To_Unbounded_String (Argument (4)),
+
+               Language           => To_Unbounded_String (Argument (5)),
+
+               Region             => To_Unbounded_String (Argument (6)),
+
+               Description        => To_Unbounded_String (Argument (7)),
+
+               Date_Last_Verified => To_Unbounded_String (Argument (8)));
+
+         begin
+
+            Put_Line ("Channel received:");
+
+            Put_Line
+
+              ("Channel: " & To_String (New_Channel.Channel_Name));
+
+            Put_Line
+
+              ("Platform: " & To_String (New_Channel.Platform));
+
+            Put_Line
+
+              ("Topic: " & To_String (New_Channel.Topic));
+
+            Put_Line
+
+              ("Language: " & To_String (New_Channel.Language));
+
+            Put_Line
+
+              ("Region: " & To_String (New_Channel.Region));
+
+            Put_Line
+
+              ("Description: " & To_String (New_Channel.Description));
+
+            Put_Line
+
+              ("Last verified: "
+
+               & To_String (New_Channel.Date_Last_Verified));
+
+         end;
+
+      end if;
 
    else
 
