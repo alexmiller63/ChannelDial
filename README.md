@@ -105,6 +105,8 @@ If the initial directory proves useful, ChannelDial can grow into a searchable w
 
 A future implementation may use Laravel and MySQL to provide searching, filtering, community submissions, verification, moderation, and other features.
 
+Future versions may also use hashtag metering to discourage search spam. Contributors could submit many relevant hashtags, while only a limited number become searchable immediately. Additional hashtags could become active gradually, allowing time for moderation without permanently limiting legitimate channels to a small number of discovery terms.
+
 The public interface should remain simple. People should not need to understand Git, GitHub, pull requests, or software development merely to find or suggest a channel.
 
 GitHub can support the open-source project behind the scenes while ChannelDial provides an ordinary, accessible website for everyone else.
