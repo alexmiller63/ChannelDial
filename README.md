@@ -1,5 +1,6 @@
 # ChannelDial
-Find Your Channel
+
+**Find Your Channel**
 
 ChannelDial
 
@@ -7,7 +8,7 @@ Find your channel.
 
 ChannelDial is an open-source directory for discovering communities on radio and radio-like communication platforms.
 
-The Problem
+## The Problem
 
 Some communication platforms make it remarkably easy to talk with people around the world, but surprisingly difficult to find them.
 
@@ -19,25 +20,31 @@ ChannelDial exists to solve that discovery problem.
 
 A radio is much more useful when you know where to tune.
 
-The Idea
+## The Idea
 
 ChannelDial is intended to provide a simple, searchable directory of channels.
 
 A user should eventually be able to search for something such as:
 
 * Santa Claus
+
 * amateur radio
+
 * GMRS
+
 * astronomy
+
 * emergency preparedness
+
 * Spanish conversation
+
 * local communities
 
 and discover relevant places to listen and participate.
 
 The goal is not to replace the communities themselves. ChannelDial is simply the dial that helps people find them.
 
-Community Culture
+## Community Culture
 
 Communication channels are communities, not merely entries in a database.
 
@@ -49,7 +56,7 @@ The directory provides neutral ground for discovery. Its purpose is not to enter
 
 Users who discover a community through ChannelDial remain responsible for learning and respecting that community’s rules and culture.
 
-Starting With Zello
+## Starting With Zello
 
 The first ChannelDial directory will focus on public Zello channels.
 
@@ -57,25 +64,31 @@ Zello is a natural starting point because it combines the experience of push-to-
 
 ChannelDial is not affiliated with or endorsed by Zello.
 
-Beyond Zello
+## Beyond Zello
 
 ChannelDial is deliberately named for the broader idea of finding something worth tuning into rather than for one particular service.
 
 Future versions could potentially include:
 
 * shortwave radio stations and frequencies
+
 * amateur-radio nets
+
 * amateur-radio repeaters
+
 * GMRS communities and repeaters
+
 * Internet radio
+
 * other push-to-talk networks
+
 * other communication systems where discovery is difficult
 
 The underlying question remains the same:
 
-What can I tune into, and where can I find it?
+**What can I tune into, and where can I find it?**
 
-Version 0.1
+## Version 0.1
 
 ChannelDial begins deliberately small.
 
@@ -83,23 +96,29 @@ There is no database, account system, crawler, API, or web application in Versio
 
 The first working directory is simply:
 
-channels.md
+`channels.md`
 
 It contains real channel information in a consistent, human-readable format.
 
 Each entry can contain information such as:
 
 * channel name
+
 * platform
+
 * topic
+
 * language
+
 * region
+
 * description
+
 * date last verified
 
 This gives ChannelDial useful information immediately while establishing a structure that can carry forward into later implementations.
 
-Future Development
+## Future Development
 
 If the initial directory proves useful, ChannelDial can grow into a searchable website.
 
@@ -111,7 +130,7 @@ The public interface should remain simple. People should not need to understand 
 
 GitHub can support the open-source project behind the scenes while ChannelDial provides an ordinary, accessible website for everyone else.
 
-Design Principle
+## Design Principle
 
 ChannelDial should be designed well from the beginning.
 
@@ -123,7 +142,7 @@ Design carefully.
 
 Build on what works.
 
-Status
+## Status
 
 ChannelDial is at the beginning.
 
