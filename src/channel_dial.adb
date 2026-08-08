@@ -26,6 +26,24 @@ procedure Channel_Dial is
 
    end record;
 
+   GMRC : constant Channel_Record :=
+
+     (Channel_Name       => To_Unbounded_String ("GMRC"),
+
+      Platform           => To_Unbounded_String ("Zello"),
+
+      Topic              => To_Unbounded_String ("Ham radio"),
+
+      Language           => To_Unbounded_String ("English"),
+
+      Region             => To_Unbounded_String ("Global"),
+
+      Description        => To_Unbounded_String
+
+        ("A Zello channel for amateur radio discussion."),
+
+      Date_Last_Verified => To_Unbounded_String ("2026-08-08"));
+
 begin
 
    Put_Line ("ChannelDial");
