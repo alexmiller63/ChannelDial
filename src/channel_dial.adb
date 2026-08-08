@@ -48,8 +48,6 @@ procedure Channel_Dial is
 
       Date_Last_Verified => To_Unbounded_String ("2026-08-08"));
 
-   --  Lesson 3: Build a collection of records using an Ada array.
-
    type Channel_Array is array (Positive range <>) of Channel_Record;
 
    Channels : constant Channel_Array :=
@@ -57,10 +55,6 @@ procedure Channel_Dial is
      (1 => GMRC);
 
 begin
-
-   --  Lesson 4: Read a Unix-style subcommand from the command line.
-
-   --  Lesson 5: Read multiple arguments and build a Channel_Record.
 
    if Argument_Count = 0 then
 
@@ -124,39 +118,71 @@ begin
 
                Date_Last_Verified => To_Unbounded_String (Argument (8)));
 
+            --  Lesson 6: Persist data by writing it to a file.
+
+            --
+
+            --  The purpose of this lesson is to introduce Ada file output.
+
+            --  File_Type represents an open file that the program can use.
+
+            Channel_File : File_Type;
+
          begin
 
-            Put_Line ("Channel received:");
+            --  Open channels.txt for appending.
+
+            --  If the file does not exist yet, create it.
+
+            begin
+
+               Open
+
+                 (File => Channel_File,
+
+                  Mode => Append_File,
+
+                  Name => "channels.txt");
+
+            exception
+
+               when Name_Error =>
+
+                  Create
+
+                    (File => Channel_File,
+
+                     Mode => Out_File,
+
+                     Name => "channels.txt");
+
+            end;
+
+            --  Store one field per line.
+
+            Put_Line (Channel_File, To_String (New_Channel.Channel_Name));
+
+            Put_Line (Channel_File, To_String (New_Channel.Platform));
+
+            Put_Line (Channel_File, To_String (New_Channel.Topic));
+
+            Put_Line (Channel_File, To_String (New_Channel.Language));
+
+            Put_Line (Channel_File, To_String (New_Channel.Region));
+
+            Put_Line (Channel_File, To_String (New_Channel.Description));
 
             Put_Line
 
-              ("Channel: " & To_String (New_Channel.Channel_Name));
+              (Channel_File,
 
-            Put_Line
+               To_String (New_Channel.Date_Last_Verified));
 
-              ("Platform: " & To_String (New_Channel.Platform));
+            --  Close the file when we have finished writing.
 
-            Put_Line
+            Close (Channel_File);
 
-              ("Topic: " & To_String (New_Channel.Topic));
-
-            Put_Line
-
-              ("Language: " & To_String (New_Channel.Language));
-
-            Put_Line
-
-              ("Region: " & To_String (New_Channel.Region));
-
-            Put_Line
-
-              ("Description: " & To_String (New_Channel.Description));
-
-            Put_Line
-
-              ("Last verified: "
-
-               & To_String (New_Channel.Date_Last_Verified));
+            Put_Line ("Channel saved.");
 
          end;
 
