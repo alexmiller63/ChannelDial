@@ -48,5 +48,19 @@ begin
 
    Put_Line ("ChannelDial");
 
+   Put_Line ("Channel: " & To_String (GMRC.Channel_Name));
+
+   Put_Line ("Platform: " & To_String (GMRC.Platform));
+
+   Put_Line ("Topic: " & To_String (GMRC.Topic));
+
+   Put_Line ("Language: " & To_String (GMRC.Language));
+
+   Put_Line ("Region: " & To_String (GMRC.Region));
+
+   Put_Line ("Description: " & To_String (GMRC.Description));
+
+   Put_Line ("Last verified: " & To_String (GMRC.Date_Last_Verified));
+
 end Channel_Dial;
 
