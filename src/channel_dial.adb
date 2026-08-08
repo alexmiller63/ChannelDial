@@ -6,6 +6,10 @@ with Ada.Strings.Unbounded;
 
 use Ada.Strings.Unbounded;
 
+with Ada.Command_Line;
+
+use Ada.Command_Line;
+
 procedure Channel_Dial is
 
    type Channel_Record is record
@@ -44,6 +48,8 @@ procedure Channel_Dial is
 
       Date_Last_Verified => To_Unbounded_String ("2026-08-08"));
 
+   --  Lesson 3: Build a collection of records using an Ada array.
+
    type Channel_Array is array (Positive range <>) of Channel_Record;
 
    Channels : constant Channel_Array :=
@@ -52,27 +58,41 @@ procedure Channel_Dial is
 
 begin
 
-   Put_Line ("ChannelDial");
+   --  Lesson 4: Read a Unix-style subcommand from the command line.
 
-   for Channel of Channels loop
+   if Argument_Count = 0 then
 
-      Put_Line ("Channel: " & To_String (Channel.Channel_Name));
+      Put_Line ("Usage: channel_dial list");
 
-      Put_Line ("Platform: " & To_String (Channel.Platform));
+   elsif Argument (1) = "list" then
 
-      Put_Line ("Topic: " & To_String (Channel.Topic));
+      for Channel of Channels loop
 
-      Put_Line ("Language: " & To_String (Channel.Language));
+         Put_Line ("Channel: " & To_String (Channel.Channel_Name));
 
-      Put_Line ("Region: " & To_String (Channel.Region));
+         Put_Line ("Platform: " & To_String (Channel.Platform));
 
-      Put_Line ("Description: " & To_String (Channel.Description));
+         Put_Line ("Topic: " & To_String (Channel.Topic));
 
-      Put_Line
+         Put_Line ("Language: " & To_String (Channel.Language));
 
-        ("Last verified: " & To_String (Channel.Date_Last_Verified));
+         Put_Line ("Region: " & To_String (Channel.Region));
 
-   end loop;
+         Put_Line
+
+           ("Description: " & To_String (Channel.Description));
+
+         Put_Line
+
+           ("Last verified: " & To_String (Channel.Date_Last_Verified));
+
+      end loop;
+
+   else
+
+      Put_Line ("Unknown command: " & Argument (1));
+
+   end if;
 
 end Channel_Dial;
 
