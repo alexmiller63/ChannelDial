@@ -1,50 +1,54 @@
-# Lesson 11: Report When a Channel Is Not Found
+# Lesson 12: Report an Unknown Command
 
-Lesson 10 introduced the `find` command and exact channel-name matching.
+Lesson 11 made the `find` command report when a requested channel could not be found.
 
-Lesson 11 makes the `find` command behave better when there is no match.
-
-The goal is for the program to distinguish between:
-
-- finding and displaying a channel
-
-- reaching the end of `channels.txt` without finding the requested channel
-
-This lesson introduces:
-
-- a Boolean value that remembers whether a match was found
-
-- changing that value when a matching channel is encountered
-
-- checking the value after the search loop finishes
-
-If no matching channel was found, the program will display a clear message instead of silently producing no output.
+Lesson 12 handles a different kind of failure: a command that ChannelDial does not recognize.
 
 For example:
 
-`Channel not found: GMRC`
+`channeldial frobnicate`
 
-The search itself remains unchanged. Channel names must still match exactly.
+ChannelDial has no `frobnicate` command.
 
-This is the first lesson devoted specifically to making ChannelDial fail well.
+Before this lesson, an unknown command could reach the end of the program without producing a useful explanation.
+
+The goal of this lesson is to make ChannelDial report the problem clearly.
+
+For example:
+
+`Unknown command: frobnicate`
+
+This lesson introduces:
+
+- using a final `else` as a catch-all case
+
+- distinguishing valid commands from unknown commands
+
+- reporting the command that ChannelDial did not recognize
+
+The existing `list` and `find` commands remain unchanged.
+
+The important idea is that after all recognized commands have been checked, anything that remains must be an unknown command.
+
+This continues the work begun in Lesson 11: ChannelDial should not merely work when the user does the right thing. It should also explain what happened when something goes wrong.
 
 ```ada
 
--- Lesson 11: Report When a Channel Is Not Found
+-- Lesson 12: Report an Unknown Command
 
 --
 
--- Lesson 10 added exact channel-name searching.
+-- Lesson 11 made the find command report when a channel
 
--- This lesson makes the find command report when no match exists.
+-- could not be found.
 
 --
 
--- A Boolean value remembers whether a matching channel was found.
+-- This lesson handles an unrecognized command.
 
--- If the search reaches the end of the file without a match,
+-- After all known commands have been checked, a final else
 
--- the program displays a clear not-found message.
+-- reports anything remaining as an unknown command.
 
 with Ada.Text_IO;
 
@@ -166,10 +170,6 @@ begin
 
          Channel      : Channel_Record;
 
-         -- The new idea in this lesson: remember whether
-
-         -- the search found a matching channel.
-
          Found        : Boolean := False;
 
       begin
@@ -210,8 +210,6 @@ begin
 
                Display_Channel (Channel);
 
-               -- Remember that a matching channel was found.
-
                Found := True;
 
             end if;
@@ -220,10 +218,6 @@ begin
 
          Close (Channel_File);
 
-         -- If Found is still False after the entire file
-
-         -- was searched, report that no channel matched.
-
          if not Found then
 
             Put_Line ("Channel not found: " & Argument (2));
@@ -231,6 +225,14 @@ begin
          end if;
 
       end;
+
+   else
+
+      -- The new idea in this lesson: if none of the known
+
+      -- commands matched, report the command as unknown.
+
+      Put_Line ("Unknown command: " & Argument (1));
 
    end if;
 
