@@ -222,3 +222,27 @@ end Channel_Dial;
 
 ```
 
+# Lesson 9: Read Multiple Saved Channels
+
+Lesson 8 completed the first persistence round trip by reading one saved channel from `channels.txt` and reconstructing a `Channel_Record`.
+
+Lesson 9 extends the `list` command so that it can read and display every saved channel in the file.
+
+The goal is to keep reading complete channel records until the program reaches the end of `channels.txt`.
+
+This lesson introduces:
+
+- looping while reading a file
+
+- using `End_Of_File` to determine when reading is finished
+
+- reconstructing and displaying one `Channel_Record` during each pass through the loop
+
+The format of `channels.txt` remains unchanged. Each channel still occupies 7 lines.
+
+The `add` command remains unchanged.
+
+After this lesson, `list` will no longer be limited to a single saved channel. It will display all of the channels stored in `channels.txt`.
+
+
+
