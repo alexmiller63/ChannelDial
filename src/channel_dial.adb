@@ -1,18 +1,18 @@
--- Lesson 9: Read Multiple Saved Channels
+-- Lesson 10: Find One Channel
 
 --
 
--- Lesson 8 read one saved channel from channels.txt.
+-- Lesson 9 made it possible to read every saved channel.
 
--- This lesson extends the list command so that it reads every
+-- This lesson adds a find command that searches those saved
 
--- saved channel in the file.
+-- channels for a channel name supplied on the command line.
 
 --
 
--- Each pass through the loop reads the 7 lines that make up one
+-- The find loop resembles the list loop, but instead of displaying
 
--- Channel_Record. The loop ends when the end of the file is reached.
+-- every record, it displays only a record whose name matches.
 
 with Ada.Text_IO;
 
@@ -88,10 +88,6 @@ begin
 
          Open (Channel_File, In_File, "channels.txt");
 
-         -- Keep reconstructing channels until there is no more
-
-         -- saved data to read.
-
          while not End_Of_File (Channel_File) loop
 
             Channel.Channel_Name :=
@@ -123,6 +119,64 @@ begin
               To_Unbounded_String (Get_Line (Channel_File));
 
             Display_Channel (Channel);
+
+         end loop;
+
+         Close (Channel_File);
+
+      end;
+
+   elsif Argument (1) = "find" and Argument_Count >= 2 then
+
+      declare
+
+         Channel_File : File_Type;
+
+         Channel      : Channel_Record;
+
+      begin
+
+         Open (Channel_File, In_File, "channels.txt");
+
+         while not End_Of_File (Channel_File) loop
+
+            Channel.Channel_Name :=
+
+              To_Unbounded_String (Get_Line (Channel_File));
+
+            Channel.Platform :=
+
+              To_Unbounded_String (Get_Line (Channel_File));
+
+            Channel.Topic :=
+
+              To_Unbounded_String (Get_Line (Channel_File));
+
+            Channel.Language :=
+
+              To_Unbounded_String (Get_Line (Channel_File));
+
+            Channel.Region :=
+
+              To_Unbounded_String (Get_Line (Channel_File));
+
+            Channel.Description :=
+
+              To_Unbounded_String (Get_Line (Channel_File));
+
+            Channel.Date_Last_Verified :=
+
+              To_Unbounded_String (Get_Line (Channel_File));
+
+            -- The new idea in this lesson: compare each saved
+
+            -- channel name with the second command-line argument.
+
+            if To_String (Channel.Channel_Name) = Argument (2) then
+
+               Display_Channel (Channel);
+
+            end if;
 
          end loop;
 
