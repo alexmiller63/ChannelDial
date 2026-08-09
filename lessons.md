@@ -280,5 +280,35 @@ The new loop will look very similar to the loop used by `list`, but it has a dif
 
 For now, the duplicated structure will remain visible. A later lesson can examine whether the common file-reading code should be factored out.
 
+# Lesson 11: Report When a Channel Is Not Found
+
+Lesson 10 introduced the `find` command and exact channel-name matching.
+
+Lesson 11 makes the `find` command behave better when there is no match.
+
+The goal is for the program to distinguish between:
+
+- finding and displaying a channel
+
+- reaching the end of `channels.txt` without finding the requested channel
+
+This lesson introduces:
+
+- a Boolean value that remembers whether a match was found
+
+- changing that value when a matching channel is encountered
+
+- checking the value after the search loop finishes
+
+If no matching channel was found, the program will display a clear message instead of silently producing no output.
+
+For example:
+
+`Channel not found: GMRC`
+
+The search itself remains unchanged. Channel names must still match exactly.
+
+This is the first lesson devoted specifically to making ChannelDial fail well.
+
 
 
