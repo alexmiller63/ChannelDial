@@ -244,5 +244,41 @@ The `add` command remains unchanged.
 
 After this lesson, `list` will no longer be limited to a single saved channel. It will display all of the channels stored in `channels.txt`.
 
+# Lesson 10: Find One Channel
+
+Lesson 9 extended the `list` command so that it reads and displays every channel stored in `channels.txt`.
+
+Lesson 10 introduces searching.
+
+The goal is to add a `find` command that searches the saved channels for a particular channel name.
+
+For example:
+
+`channeldial find GMRC`
+
+The `list` command remains unchanged.
+
+The new `find` command will:
+
+- open `channels.txt`
+
+- read one complete `Channel_Record` at a time
+
+- compare the channel name with the name supplied on the command line
+
+- display the channel when a match is found
+
+This lesson introduces:
+
+- using a second command-line argument
+
+- comparing a field in a `Channel_Record` with a search value
+
+- using a file-reading loop for a different purpose
+
+The new loop will look very similar to the loop used by `list`, but it has a different job.
+
+For now, the duplicated structure will remain visible. A later lesson can examine whether the common file-reading code should be factored out.
+
 
 
