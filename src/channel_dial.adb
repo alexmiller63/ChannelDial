@@ -1,18 +1,50 @@
--- Lesson 10: Find One Channel
+# Lesson 11: Report When a Channel Is Not Found
+
+Lesson 10 introduced the `find` command and exact channel-name matching.
+
+Lesson 11 makes the `find` command behave better when there is no match.
+
+The goal is for the program to distinguish between:
+
+- finding and displaying a channel
+
+- reaching the end of `channels.txt` without finding the requested channel
+
+This lesson introduces:
+
+- a Boolean value that remembers whether a match was found
+
+- changing that value when a matching channel is encountered
+
+- checking the value after the search loop finishes
+
+If no matching channel was found, the program will display a clear message instead of silently producing no output.
+
+For example:
+
+`Channel not found: GMRC`
+
+The search itself remains unchanged. Channel names must still match exactly.
+
+This is the first lesson devoted specifically to making ChannelDial fail well.
+
+```ada
+
+-- Lesson 11: Report When a Channel Is Not Found
 
 --
 
--- Lesson 9 made it possible to read every saved channel.
+-- Lesson 10 added exact channel-name searching.
 
--- This lesson adds a find command that searches those saved
-
--- channels for a channel name supplied on the command line.
+-- This lesson makes the find command report when no match exists.
 
 --
 
--- The find loop resembles the list loop, but instead of displaying
+-- A Boolean value remembers whether a matching channel was found.
 
--- every record, it displays only a record whose name matches.
+-- If the search reaches the end of the file without a match,
+
+-- the program displays a clear not-found message.
 
 with Ada.Text_IO;
 
@@ -134,6 +166,12 @@ begin
 
          Channel      : Channel_Record;
 
+         -- The new idea in this lesson: remember whether
+
+         -- the search found a matching channel.
+
+         Found        : Boolean := False;
+
       begin
 
          Open (Channel_File, In_File, "channels.txt");
@@ -168,13 +206,13 @@ begin
 
               To_Unbounded_String (Get_Line (Channel_File));
 
-            -- The new idea in this lesson: compare each saved
-
-            -- channel name with the second command-line argument.
-
             if To_String (Channel.Channel_Name) = Argument (2) then
 
                Display_Channel (Channel);
+
+               -- Remember that a matching channel was found.
+
+               Found := True;
 
             end if;
 
@@ -182,9 +220,21 @@ begin
 
          Close (Channel_File);
 
+         -- If Found is still False after the entire file
+
+         -- was searched, report that no channel matched.
+
+         if not Found then
+
+            Put_Line ("Channel not found: " & Argument (2));
+
+         end if;
+
       end;
 
    end if;
 
 end Channel_Dial;
+
+```
 
