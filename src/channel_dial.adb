@@ -1,3 +1,19 @@
+-- Lesson 8: Read a Saved Channel
+
+--
+
+-- This lesson completes the first persistence round trip.
+
+-- A channel that was previously written to channels.txt is
+
+-- read back into a Channel_Record and displayed by the list command.
+
+--
+
+-- For now, the program reads only one saved channel.
+
+-- Reading multiple channels will be introduced in a later lesson.
+
 with Ada.Text_IO;
 
 use Ada.Text_IO;
@@ -29,24 +45,6 @@ procedure Channel_Dial is
       Date_Last_Verified : Unbounded_String;
 
    end record;
-
-   GMRC : constant Channel_Record :=
-
-     (Channel_Name       => To_Unbounded_String ("GMRC"),
-
-      Platform           => To_Unbounded_String ("Zello"),
-
-      Topic              => To_Unbounded_String ("Ham radio"),
-
-      Language           => To_Unbounded_String ("English"),
-
-      Region             => To_Unbounded_String ("Global"),
-
-      Description        => To_Unbounded_String
-
-        ("Global ham radio community"),
-
-      Date_Last_Verified => To_Unbounded_String ("2026-08-08"));
 
    procedure Display_Channel (Channel : Channel_Record) is
 
@@ -80,7 +78,51 @@ begin
 
    elsif Argument (1) = "list" then
 
-      Display_Channel (GMRC);
+      declare
+
+         Channel_File : File_Type;
+
+         Channel      : Channel_Record;
+
+      begin
+
+         Open (Channel_File, In_File, "channels.txt");
+
+         Channel.Channel_Name :=
+
+           To_Unbounded_String (Get_Line (Channel_File));
+
+         Channel.Platform :=
+
+           To_Unbounded_String (Get_Line (Channel_File));
+
+         Channel.Topic :=
+
+           To_Unbounded_String (Get_Line (Channel_File));
+
+         Channel.Language :=
+
+           To_Unbounded_String (Get_Line (Channel_File));
+
+         Channel.Region :=
+
+           To_Unbounded_String (Get_Line (Channel_File));
+
+         Channel.Description :=
+
+           To_Unbounded_String (Get_Line (Channel_File));
+
+         Channel.Date_Last_Verified :=
+
+           To_Unbounded_String (Get_Line (Channel_File));
+
+         Close (Channel_File);
+
+         -- The saved data is now a Channel_Record again.
+
+         Display_Channel (Channel);
+
+      end;
 
    end if;
 
