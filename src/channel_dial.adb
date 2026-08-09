@@ -1,18 +1,18 @@
--- Lesson 8: Read a Saved Channel
+-- Lesson 9: Read Multiple Saved Channels
 
 --
 
--- This lesson completes the first persistence round trip.
+-- Lesson 8 read one saved channel from channels.txt.
 
--- A channel that was previously written to channels.txt is
+-- This lesson extends the list command so that it reads every
 
--- read back into a Channel_Record and displayed by the list command.
+-- saved channel in the file.
 
 --
 
--- For now, the program reads only one saved channel.
+-- Each pass through the loop reads the 7 lines that make up one
 
--- Reading multiple channels will be introduced in a later lesson.
+-- Channel_Record. The loop ends when the end of the file is reached.
 
 with Ada.Text_IO;
 
@@ -88,39 +88,45 @@ begin
 
          Open (Channel_File, In_File, "channels.txt");
 
-         Channel.Channel_Name :=
+         -- Keep reconstructing channels until there is no more
 
-           To_Unbounded_String (Get_Line (Channel_File));
+         -- saved data to read.
 
-         Channel.Platform :=
+         while not End_Of_File (Channel_File) loop
 
-           To_Unbounded_String (Get_Line (Channel_File));
+            Channel.Channel_Name :=
 
-         Channel.Topic :=
+              To_Unbounded_String (Get_Line (Channel_File));
 
-           To_Unbounded_String (Get_Line (Channel_File));
+            Channel.Platform :=
 
-         Channel.Language :=
+              To_Unbounded_String (Get_Line (Channel_File));
 
-           To_Unbounded_String (Get_Line (Channel_File));
+            Channel.Topic :=
 
-         Channel.Region :=
+              To_Unbounded_String (Get_Line (Channel_File));
 
-           To_Unbounded_String (Get_Line (Channel_File));
+            Channel.Language :=
 
-         Channel.Description :=
+              To_Unbounded_String (Get_Line (Channel_File));
 
-           To_Unbounded_String (Get_Line (Channel_File));
+            Channel.Region :=
 
-         Channel.Date_Last_Verified :=
+              To_Unbounded_String (Get_Line (Channel_File));
 
-           To_Unbounded_String (Get_Line (Channel_File));
+            Channel.Description :=
+
+              To_Unbounded_String (Get_Line (Channel_File));
+
+            Channel.Date_Last_Verified :=
+
+              To_Unbounded_String (Get_Line (Channel_File));
+
+            Display_Channel (Channel);
+
+         end loop;
 
          Close (Channel_File);
-
-         -- The saved data is now a Channel_Record again.
-
-         Display_Channel (Channel);
 
       end;
 
