@@ -118,21 +118,23 @@ begin
 
                Date_Last_Verified => To_Unbounded_String (Argument (8)));
 
-            --  Lesson 6: Persist data by writing it to a file.
+            --  Lesson 6: Persist channel data in a file.
 
             --
 
             --  The purpose of this lesson is to introduce Ada file output.
 
-            --  File_Type represents an open file that the program can use.
+            --  File_Type represents a file that Ada has opened or created.
 
             Channel_File : File_Type;
 
          begin
 
-            --  Open channels.txt for appending.
+            --  Open an existing file in Append_File mode.
 
-            --  If the file does not exist yet, create it.
+            --  Append_File preserves the existing contents and writes
+
+            --  new data at the end of the file.
 
             begin
 
@@ -143,6 +145,10 @@ begin
                   Mode => Append_File,
 
                   Name => "channels.txt");
+
+            --  Open raises Name_Error if channels.txt does not exist.
+
+            --  In that case, create the file instead.
 
             exception
 
@@ -158,19 +164,45 @@ begin
 
             end;
 
-            --  Store one field per line.
+            --  Put_Line writes text to Channel_File.
 
-            Put_Line (Channel_File, To_String (New_Channel.Channel_Name));
+            --  Each field of the record is stored on its own line.
 
-            Put_Line (Channel_File, To_String (New_Channel.Platform));
+            Put_Line
 
-            Put_Line (Channel_File, To_String (New_Channel.Topic));
+              (Channel_File,
 
-            Put_Line (Channel_File, To_String (New_Channel.Language));
+               To_String (New_Channel.Channel_Name));
 
-            Put_Line (Channel_File, To_String (New_Channel.Region));
+            Put_Line
 
-            Put_Line (Channel_File, To_String (New_Channel.Description));
+              (Channel_File,
+
+               To_String (New_Channel.Platform));
+
+            Put_Line
+
+              (Channel_File,
+
+               To_String (New_Channel.Topic));
+
+            Put_Line
+
+              (Channel_File,
+
+               To_String (New_Channel.Language));
+
+            Put_Line
+
+              (Channel_File,
+
+               To_String (New_Channel.Region));
+
+            Put_Line
+
+              (Channel_File,
+
+               To_String (New_Channel.Description));
 
             Put_Line
 
@@ -178,7 +210,7 @@ begin
 
                To_String (New_Channel.Date_Last_Verified));
 
-            --  Close the file when we have finished writing.
+            --  Close tells Ada that we have finished using the file.
 
             Close (Channel_File);
 
