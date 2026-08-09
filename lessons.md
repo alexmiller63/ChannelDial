@@ -344,40 +344,6 @@ The important idea is that after all recognized commands have been checked, anyt
 
 This continues the work begun in Lesson 11: ChannelDial should not merely work when the user does the right thing. It should also explain what happened when something goes wrong.
 
-# Lesson 12: Report an Unknown Command
-
-Lesson 11 made the `find` command report when a requested channel could not be found.
-
-Lesson 12 handles a different kind of failure: a command that ChannelDial does not recognize.
-
-For example:
-
-`channeldial frobnicate`
-
-ChannelDial has no `frobnicate` command.
-
-Before this lesson, an unknown command could reach the end of the program without producing a useful explanation.
-
-The goal of this lesson is to make ChannelDial report the problem clearly.
-
-For example:
-
-`Unknown command: frobnicate`
-
-This lesson introduces:
-
-- using a final `else` as a catch-all case
-
-- distinguishing valid commands from unknown commands
-
-- reporting the command that ChannelDial did not recognize
-
-The existing `list` and `find` commands remain unchanged.
-
-The important idea is that after all recognized commands have been checked, anything that remains must be an unknown command.
-
-This continues the work begun in Lesson 11: ChannelDial should not merely work when the user does the right thing. It should also explain what happened when something goes wrong.
-
 ```ada
 
 -- Lesson 12: Report an Unknown Command
@@ -585,6 +551,4 @@ begin
 end Channel_Dial;
 
 ```
-
-
 
