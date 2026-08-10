@@ -552,3 +552,53 @@ end Channel_Dial;
 
 ```
 
+# Lesson 13: Report a Missing Argument
+
+Lesson 12 made ChannelDial report an unknown command.
+
+Lesson 13 handles a different problem: a valid command that is missing information it needs.
+
+For example:
+
+`channeldial find`
+
+`find` is a valid ChannelDial command, but it needs the name of a channel to find.
+
+Before this lesson, this command would fall through to the final `else` and produce:
+
+`Unknown command: find`
+
+That message is misleading. ChannelDial recognizes `find`. The problem is that the channel name is missing.
+
+The goal of this lesson is to report that problem clearly.
+
+For example:
+
+`Missing channel name.`
+
+`Usage: channeldial find CHANNEL`
+
+This lesson introduces:
+
+- recognizing a valid command before checking whether it has enough arguments
+
+- reporting a missing command-line argument
+
+- displaying a simple usage message
+
+The existing `list`, `find`, channel-not-found, and unknown-command behavior remain unchanged.
+
+The important idea is that ChannelDial should first determine **which command the user requested**, and then determine whether that command received the information it requires.
+
+In Lesson 12, the `find` test was:
+
+`elsif Argument (1) = "find" and Argument_Count >= 2 then`
+
+In Lesson 13, ChannelDial first recognizes `find`:
+
+`elsif Argument (1) = "find" then`
+
+It then checks separately whether the required channel name was supplied.
+
+This prevents a recognized but incomplete command from being incorrectly reported as an unknown command.
+
