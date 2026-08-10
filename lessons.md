@@ -602,3 +602,65 @@ It then checks separately whether the required channel name was supplied.
 
 This prevents a recognized but incomplete command from being incorrectly reported as an unknown command.
 
+# Lesson 14: Report Too Many Arguments
+
+Lesson 13 made ChannelDial report when the `find` command was missing its required channel name.
+
+Lesson 14 handles the opposite problem: a recognized command that receives more arguments than it needs.
+
+For example:
+
+`channeldial list nonsense`
+
+The `list` command does not need any additional arguments.
+
+Another example is:
+
+`channeldial find GMRC nonsense`
+
+The `find` command needs exactly one channel name. Anything after the channel name is an extra argument.
+
+Before this lesson, ChannelDial would silently ignore those extra arguments and continue running the command.
+
+The goal of this lesson is to report the problem instead.
+
+For example:
+
+`Too many arguments.`
+
+`Usage: channeldial list`
+
+or:
+
+`Too many arguments.`
+
+`Usage: channeldial find CHANNEL`
+
+This lesson introduces:
+
+- checking the maximum number of arguments a command accepts
+
+- distinguishing missing arguments from extra arguments
+
+- refusing to silently ignore unexpected command-line input
+
+The existing valid `list` and `find` behavior remains unchanged.
+
+The important idea is that a command-line program should not merely recognize the command name. It should also verify that the command has been used in the form it expects.
+
+For `list`, ChannelDial checks:
+
+`Argument_Count > 1`
+
+For `find`, ChannelDial first checks whether the channel name is missing:
+
+`Argument_Count < 2`
+
+and then checks whether additional arguments were supplied:
+
+`Argument_Count > 2`
+
+Only when the number of arguments is correct does ChannelDial perform the requested command.
+
+This continues the work of making ChannelDial fail clearly instead of silently accepting malformed commands.
+
