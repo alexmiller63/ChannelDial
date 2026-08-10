@@ -1,20 +1,10 @@
--- Lesson 14: Report Too Many Arguments
+-- Lesson 15: Add a Help Command
 
 --
 
--- Lesson 13 made ChannelDial report when the find command
+-- This lesson adds a help command and a Display_Help procedure.
 
--- was missing its required channel name.
-
---
-
--- This lesson handles the opposite problem: too many arguments.
-
---
-
--- Each command now checks that it received exactly the
-
--- number of arguments it expects.
+-- Running ChannelDial without a command also displays the same help.
 
 with Ada.Text_IO;
 
@@ -72,19 +62,37 @@ procedure Channel_Dial is
 
    end Display_Channel;
 
+   -- The new procedure keeps the help text in one place.
+
+   -- Both the help command and a command line with no arguments
+
+   -- can use the same procedure.
+
+   procedure Display_Help is
+
+   begin
+
+      Put_Line ("ChannelDial");
+
+      New_Line;
+
+      Put_Line ("Commands:");
+
+      Put_Line ("  list");
+
+      Put_Line ("  find CHANNEL");
+
+      Put_Line ("  help");
+
+   end Display_Help;
+
 begin
 
    if Argument_Count = 0 then
 
-      Put_Line ("ChannelDial");
+      Display_Help;
 
    elsif Argument (1) = "list" then
-
-      -- The list command does not need any additional arguments.
-
-      -- If the user supplies one, report the problem instead
-
-      -- of silently ignoring it.
 
       if Argument_Count > 1 then
 
@@ -146,10 +154,6 @@ begin
 
    elsif Argument (1) = "find" then
 
-      -- Lesson 13 handled a missing channel name.
-
-      -- Lesson 14 also checks for extra arguments.
-
       if Argument_Count < 2 then
 
          Put_Line ("Missing channel name.");
@@ -157,10 +161,6 @@ begin
          Put_Line ("Usage: channeldial find CHANNEL");
 
       elsif Argument_Count > 2 then
-
-         -- The find command needs exactly one channel name.
-
-         -- Anything after that is an extra argument.
 
          Put_Line ("Too many arguments.");
 
@@ -232,11 +232,23 @@ begin
 
       end if;
 
+   elsif Argument (1) = "help" then
+
+      -- The help command takes no additional arguments.
+
+      if Argument_Count > 1 then
+
+         Put_Line ("Too many arguments.");
+
+         Put_Line ("Usage: channeldial help");
+
+      else
+
+         Display_Help;
+
+      end if;
+
    else
-
-      -- If none of the known commands matched, the command
-
-      -- itself is unknown.
 
       Put_Line ("Unknown command: " & Argument (1));
 
