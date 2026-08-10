@@ -664,3 +664,73 @@ Only when the number of arguments is correct does ChannelDial perform the reques
 
 This continues the work of making ChannelDial fail clearly instead of silently accepting malformed commands.
 
+# Lesson 15: Add a Help Command
+
+Lessons 11 through 14 improved the way ChannelDial responds when something goes wrong.
+
+Lesson 15 adds something different: a way for the user to ask ChannelDial how to use it.
+
+The new command is:
+
+`channeldial help`
+
+ChannelDial responds by displaying its available commands:
+
+`ChannelDial`
+
+`Commands:`
+
+`  list`
+
+`  find CHANNEL`
+
+`  help`
+
+The same information is also displayed when ChannelDial is run without any arguments.
+
+Before this lesson, running:
+
+`channeldial`
+
+displayed only:
+
+`ChannelDial`
+
+That identified the program, but did not tell the user what to do next.
+
+This lesson introduces:
+
+- a `Display_Help` procedure
+
+- a `help` command
+
+- reusing one procedure from more than one place in the command-line interface
+
+The important idea is that the help text should have a single home in the source code.
+
+Both:
+
+`channeldial`
+
+and:
+
+`channeldial help`
+
+call `Display_Help`.
+
+This avoids maintaining 2 separate copies of the same help text.
+
+The `help` command also follows the argument-checking behavior introduced in Lesson 14. It does not require any additional arguments.
+
+For example:
+
+`channeldial help nonsense`
+
+produces:
+
+`Too many arguments.`
+
+`Usage: channeldial help`
+
+ChannelDial is now beginning to explain not only what went wrong, but also how it is meant to be used.
+
