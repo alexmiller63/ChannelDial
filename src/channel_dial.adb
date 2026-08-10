@@ -1,54 +1,20 @@
-# Lesson 12: Report an Unknown Command
-
-Lesson 11 made the `find` command report when a requested channel could not be found.
-
-Lesson 12 handles a different kind of failure: a command that ChannelDial does not recognize.
-
-For example:
-
-`channeldial frobnicate`
-
-ChannelDial has no `frobnicate` command.
-
-Before this lesson, an unknown command could reach the end of the program without producing a useful explanation.
-
-The goal of this lesson is to make ChannelDial report the problem clearly.
-
-For example:
-
-`Unknown command: frobnicate`
-
-This lesson introduces:
-
-- using a final `else` as a catch-all case
-
-- distinguishing valid commands from unknown commands
-
-- reporting the command that ChannelDial did not recognize
-
-The existing `list` and `find` commands remain unchanged.
-
-The important idea is that after all recognized commands have been checked, anything that remains must be an unknown command.
-
-This continues the work begun in Lesson 11: ChannelDial should not merely work when the user does the right thing. It should also explain what happened when something goes wrong.
-
-```ada
-
--- Lesson 12: Report an Unknown Command
+-- Lesson 14: Report Too Many Arguments
 
 --
 
--- Lesson 11 made the find command report when a channel
+-- Lesson 13 made ChannelDial report when the find command
 
--- could not be found.
+-- was missing its required channel name.
 
 --
 
--- This lesson handles an unrecognized command.
+-- This lesson handles the opposite problem: too many arguments.
 
--- After all known commands have been checked, a final else
+--
 
--- reports anything remaining as an unknown command.
+-- Each command now checks that it received exactly the
+
+-- number of arguments it expects.
 
 with Ada.Text_IO;
 
@@ -114,129 +80,167 @@ begin
 
    elsif Argument (1) = "list" then
 
-      declare
+      -- The list command does not need any additional arguments.
 
-         Channel_File : File_Type;
+      -- If the user supplies one, report the problem instead
 
-         Channel      : Channel_Record;
+      -- of silently ignoring it.
 
-      begin
+      if Argument_Count > 1 then
 
-         Open (Channel_File, In_File, "channels.txt");
+         Put_Line ("Too many arguments.");
 
-         while not End_Of_File (Channel_File) loop
+         Put_Line ("Usage: channeldial list");
 
-            Channel.Channel_Name :=
+      else
 
-              To_Unbounded_String (Get_Line (Channel_File));
+         declare
 
-            Channel.Platform :=
+            Channel_File : File_Type;
 
-              To_Unbounded_String (Get_Line (Channel_File));
+            Channel      : Channel_Record;
 
-            Channel.Topic :=
+         begin
 
-              To_Unbounded_String (Get_Line (Channel_File));
+            Open (Channel_File, In_File, "channels.txt");
 
-            Channel.Language :=
+            while not End_Of_File (Channel_File) loop
 
-              To_Unbounded_String (Get_Line (Channel_File));
+               Channel.Channel_Name :=
 
-            Channel.Region :=
+                 To_Unbounded_String (Get_Line (Channel_File));
 
-              To_Unbounded_String (Get_Line (Channel_File));
+               Channel.Platform :=
 
-            Channel.Description :=
+                 To_Unbounded_String (Get_Line (Channel_File));
 
-              To_Unbounded_String (Get_Line (Channel_File));
+               Channel.Topic :=
 
-            Channel.Date_Last_Verified :=
+                 To_Unbounded_String (Get_Line (Channel_File));
 
-              To_Unbounded_String (Get_Line (Channel_File));
+               Channel.Language :=
 
-            Display_Channel (Channel);
+                 To_Unbounded_String (Get_Line (Channel_File));
 
-         end loop;
+               Channel.Region :=
 
-         Close (Channel_File);
+                 To_Unbounded_String (Get_Line (Channel_File));
 
-      end;
+               Channel.Description :=
 
-   elsif Argument (1) = "find" and Argument_Count >= 2 then
+                 To_Unbounded_String (Get_Line (Channel_File));
 
-      declare
+               Channel.Date_Last_Verified :=
 
-         Channel_File : File_Type;
-
-         Channel      : Channel_Record;
-
-         Found        : Boolean := False;
-
-      begin
-
-         Open (Channel_File, In_File, "channels.txt");
-
-         while not End_Of_File (Channel_File) loop
-
-            Channel.Channel_Name :=
-
-              To_Unbounded_String (Get_Line (Channel_File));
-
-            Channel.Platform :=
-
-              To_Unbounded_String (Get_Line (Channel_File));
-
-            Channel.Topic :=
-
-              To_Unbounded_String (Get_Line (Channel_File));
-
-            Channel.Language :=
-
-              To_Unbounded_String (Get_Line (Channel_File));
-
-            Channel.Region :=
-
-              To_Unbounded_String (Get_Line (Channel_File));
-
-            Channel.Description :=
-
-              To_Unbounded_String (Get_Line (Channel_File));
-
-            Channel.Date_Last_Verified :=
-
-              To_Unbounded_String (Get_Line (Channel_File));
-
-            if To_String (Channel.Channel_Name) = Argument (2) then
+                 To_Unbounded_String (Get_Line (Channel_File));
 
                Display_Channel (Channel);
 
-               Found := True;
+            end loop;
+
+            Close (Channel_File);
+
+         end;
+
+      end if;
+
+   elsif Argument (1) = "find" then
+
+      -- Lesson 13 handled a missing channel name.
+
+      -- Lesson 14 also checks for extra arguments.
+
+      if Argument_Count < 2 then
+
+         Put_Line ("Missing channel name.");
+
+         Put_Line ("Usage: channeldial find CHANNEL");
+
+      elsif Argument_Count > 2 then
+
+         -- The find command needs exactly one channel name.
+
+         -- Anything after that is an extra argument.
+
+         Put_Line ("Too many arguments.");
+
+         Put_Line ("Usage: channeldial find CHANNEL");
+
+      else
+
+         declare
+
+            Channel_File : File_Type;
+
+            Channel      : Channel_Record;
+
+            Found        : Boolean := False;
+
+         begin
+
+            Open (Channel_File, In_File, "channels.txt");
+
+            while not End_Of_File (Channel_File) loop
+
+               Channel.Channel_Name :=
+
+                 To_Unbounded_String (Get_Line (Channel_File));
+
+               Channel.Platform :=
+
+                 To_Unbounded_String (Get_Line (Channel_File));
+
+               Channel.Topic :=
+
+                 To_Unbounded_String (Get_Line (Channel_File));
+
+               Channel.Language :=
+
+                 To_Unbounded_String (Get_Line (Channel_File));
+
+               Channel.Region :=
+
+                 To_Unbounded_String (Get_Line (Channel_File));
+
+               Channel.Description :=
+
+                 To_Unbounded_String (Get_Line (Channel_File));
+
+               Channel.Date_Last_Verified :=
+
+                 To_Unbounded_String (Get_Line (Channel_File));
+
+               if To_String (Channel.Channel_Name) = Argument (2) then
+
+                  Display_Channel (Channel);
+
+                  Found := True;
+
+               end if;
+
+            end loop;
+
+            Close (Channel_File);
+
+            if not Found then
+
+               Put_Line ("Channel not found: " & Argument (2));
 
             end if;
 
-         end loop;
+         end;
 
-         Close (Channel_File);
-
-         if not Found then
-
-            Put_Line ("Channel not found: " & Argument (2));
-
-         end if;
-
-      end;
+      end if;
 
    else
 
-      -- The new idea in this lesson: if none of the known
+      -- If none of the known commands matched, the command
 
-      -- commands matched, report the command as unknown.
+      -- itself is unknown.
 
       Put_Line ("Unknown command: " & Argument (1));
 
    end if;
 
 end Channel_Dial;
-
-```
 
