@@ -148,3 +148,34 @@ ChannelDial is at the beginning.
 
 The dial is just starting to turn.
 
+## Channel Discovery Resources
+
+ChannelDial can draw on publicly available directories and community resources to discover channels and verify that they remain active.
+
+Useful sources include:
+
+- **ZelloSheet** — A community-maintained directory containing thousands of Zello channels, with an emphasis on checking whether listed channels still exist and remain active.
+
+- **ZelloSheet Forum** — Community discussions about newly discovered channels, channel testing, and changes to existing channels.
+
+- **Reddit** — Community discussions can identify active channels and networks, including GMRS, amateur radio, and other specialized communities.
+
+- **Other community forums and directories** — Additional public sources can be used to discover channels that may not appear in the major directories.
+
+Information discovered through these resources should not simply be imported without verification. ChannelDial should cross-check information where practical and record the date on which a channel was last verified.
+
+### Why External Discovery Matters
+
+ZelloSheet reports that Zello disabled its general public channel search in 2021. As a result, external directories and community-maintained resources have become important tools for discovering public Zello channels.
+
+This creates a useful role for ChannelDial: bringing scattered channel information together into a searchable, structured directory while keeping track of when that information was last verified.
+
+### Initial Resources
+
+- ZelloSheet: https://zellosheet.nl/
+
+- ZelloSheet Forum: https://forum.zellosheet.nl/
+
+- Reddit GMRS community: https://www.reddit.com/r/gmrs/
+
+
